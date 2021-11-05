@@ -71,7 +71,6 @@ router.get("/temperaments", async (req, res) => {
     });
   });
   const uniqueTemperaments = Object.keys(uniques).sort();
-  console.log(uniqueTemperaments)
 
   //console.log(uniqueTemperaments)
   uniqueTemperaments.forEach((el) => {
@@ -84,32 +83,31 @@ router.get("/temperaments", async (req, res) => {
 });
 
 router.post("/dogs", async (req, res) => {
-  const { name, height, weight, life_span, temperament, createdInDb, image } = req.body;
-   dogCreated = await Dog.create({
+  const { name, height, weight, life_span, temperaments, image } = req.body;
+  const dogCreated = await Dog.create({
     weight,
     height,
     name,
     life_span,
     image,
-    createdInDb
   });
 
   let temperamentDb = await Temperament.findAll({
-    where: { name: temperament },
+    where: { name: temperaments },
   });
-  dogCreated.addTemperament(temperamentDb)
-  res.send('Creación de perro exitosa')
+  dogCreated.addTemperament(temperamentDb);
+  res.send("Creación de perro exitosa");
 });
 
-router.get('/dogs/:id', async (req, res) => {
-    const id = req.params.id;
-    const allDogs = await getAllDogs()
-    if(id){
-        let dogId = await allDogs.filter( el => el.id == id)
-        dogId.length?
-        res.status(200).json(dogId) :
-        res.status(404).send("No hay una raza con ese ID")
-    }
-})
+router.get("/dogs/:id", async (req, res) => {
+  const id = req.params.id;
+  const allDogs = await getAllDogs();
+  if (id) {
+    let dogId = await allDogs.filter((el) => el.id == id);
+    dogId.length
+      ? res.status(200).json(dogId)
+      : res.status(404).send("No hay una raza con ese ID");
+  }
+});
 
 module.exports = router;

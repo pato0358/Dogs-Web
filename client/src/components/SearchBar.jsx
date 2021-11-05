@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { getDogsName } from "../actions";
+// import { getDogsName } from "../actions";
 
 export default function SearchBar() {
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ export default function SearchBar() {
   }
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(getDogsName(name))
+    // dispatch(getDogsName(name))
     setName(' ');
   }
 
