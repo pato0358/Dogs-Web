@@ -61,9 +61,9 @@ router.get("/dogs", async (req, res) => {
 
 router.get("/temperaments", async (req, res) => {
   const apiDogs = await getApiDogs();
-  //console.log(apiTemperaments)
+
   const dogTemperaments = apiDogs.map((el) => el.temperaments);
-  //(console.log(temperaments)
+
   const uniques = {};
   dogTemperaments.forEach((list) => {
     list?.forEach((t) => {
@@ -72,7 +72,6 @@ router.get("/temperaments", async (req, res) => {
   });
   const uniqueTemperaments = Object.keys(uniques).sort();
 
-  //console.log(uniqueTemperaments)
   uniqueTemperaments.forEach((el) => {
     Temperament.findOrCreate({
       where: { name: el },
