@@ -1,15 +1,17 @@
-import './App.css';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import LandingPage from './components/LandingPage';
 import DogCreate from './components/DogCreate'
 import Home from './components/Home'
 import Details from './components/Details';
+import styles from "./App.module.css"
 
 function App() {
   return (
+    <div className={styles.app}>
+  
     <BrowserRouter>
-    <div className="App">
-      <Switch>
+    <div>
+      <Switch >
     <Route exact path= '/' component = {LandingPage}/>
     <Route exact path= '/dog' component = {DogCreate}/>
     <Route path= '/details/:id' component = {Details}/>
@@ -17,6 +19,9 @@ function App() {
       </Switch>
          </div>
     </BrowserRouter>
+    </div>
+  
+
   );
 }
 

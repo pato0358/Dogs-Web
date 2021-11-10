@@ -1,0 +1,41 @@
+.logo {
+  image-rendering: auto url(../assets/logo.png);
+  position: relative;
+  background-repeat: no-repeat;
+  width: 10px;
+  height: 20px;
+}
+
+.gify {
+  display: flex;
+  margin-left: 20rem;
+}
+
+.title {
+  font-size: 4rem;
+  text-align: center;
+  font-family:fantasy;
+  color: white;
+  
+}
+
+.btn {
+  -webkit-border-radius: 60;
+  -moz-border-radius: 60;
+  border-radius: 60px;
+  font-family: Georgia;
+  color: #ffffff;
+  font-size: 70px;
+  background: rgb(62, 73, 186);
+  padding: 20px 30px 20px 30px;
+  text-decoration: none;
+  cursor: pointer;
+  position: absolute;
+  margin-left: 60vw;
+  top: 20vw;
+}
+
+.btn:hover {
+  background: rgb(74, 85, 201);
+  text-decoration: none;
+}

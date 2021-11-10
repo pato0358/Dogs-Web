@@ -1,0 +1,129 @@
+.container {
+  margin-top: 100vh;
+  max-width: 600px;
+  max-height: 800px;
+  margin: 0 auto;
+  position: relative;
+  background-color: rgb(66, 73, 150);
+  padding-bottom: 1px;
+}
+
+.title {
+  color: white;
+  text-align: center;
+  margin-top: 6vh;
+  padding-top: 10px;
+}
+
+.label {
+  color: white;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 1.5rem;
+  margin-left: 30px;
+}
+.input {
+  color: black;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  font-size: 1.2rem;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  
+}
+.title1{
+    margin-top: -18vh;
+    margin-left: 11vw;
+    font-family: fantasy;
+    font-size: 40px;
+    color: white;
+  }
+  
+  .gify{
+    margin-top: 1.5vh;
+    margin-left: 3vw;
+  
+  }
+
+  .link{
+    text-decoration: none;
+  }
+  .homeBtn {
+    -webkit-border-radius: 60;
+    -moz-border-radius: 60;
+    border-radius: 60px;
+    font-family: Georgia;
+    color: #ffffff;
+    font-size: 30px;
+    background: rgb(66, 73, 150);
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    margin-left: 160vh;
+    margin-top: -16vh;
+    display: flex;
+    text-decoration: none;
+  }
+  
+  .homeBtn:hover {
+    background: #807dc4;
+    text-decoration: none;
+  }
+
+  .homeBtn1 {
+    -webkit-border-radius: 60;
+    -moz-border-radius: 60;
+    border-radius: 60px;
+    font-family: Georgia;
+    color: #ffffff;
+    font-size: 30px;
+    background: rgb(66, 73, 150);
+    padding: 10px 20px 10px 20px;
+    text-decoration: none;
+    margin-left:17vw;
+    margin-top: 1vh;
+    margin-bottom: 2vh;
+    display: flex;
+    text-decoration: none;
+  }
+  
+  .homeBtn1:hover {
+    background: #807dc4;
+    text-decoration: none;
+  }
+  .parent {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+    }
+  .temps {
+      color:white;
+      display: flex;
+  flex-direction: row;
+  margin-left: 5vw;
+  padding-bottom: 1vw;
+  
+  }
+  .tempBtn{
+    -webkit-border-radius: 11;
+    -moz-border-radius: 11;
+    border-radius: 11px;
+    font-family: Arial;
+    color: #ffffff;
+    font-size: 15px;
+    background: rgb(66, 73, 150);
+    padding: 5px 10px 5px 10px;
+    text-decoration: none;
+    position:absolute;
+    margin-left: 3vw;
+    margin-top: -6vh;
+  }
+  
+  .tempBtn:hover {
+    background: #807dc4;
+    
+    text-decoration: none;
+  }
+
+  .list{
+    list-style-type:none
+  }

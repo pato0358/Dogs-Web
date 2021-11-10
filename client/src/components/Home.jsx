@@ -12,20 +12,23 @@ import { Link } from "react-router-dom";
 import Card from "./Card";
 import Paginado from "./Paginado";
 import SearchBar from "./SearchBar";
+import styles from "./Home.module.css";
 
 const comparators = {
   nameAsc: (a, b) => a.name.localeCompare(b.name),
   nameDesc: (a, b) => b.name.localeCompare(a.name),
-  weightAsc: (a, b) =>
-    a.weight.split(" - ")[0] - b.weight.split(" - ")[0],
-  weightDesc: (a, b) =>
-    b.weight.split(" - ")[0] - a.weight.split(" - ")[0],
+  weightAsc: (a, b) => getWeight(a) - getWeight(b),
+  weightDesc: (a, b) => getWeight(b) - getWeight(a),
 };
+
+function getWeight(dog) {
+  const w = dog.weight.split(" - ")[0];
+  return w > 0 ? w : 0;
+}
 
 export default function Home() {
   const dispatch = useDispatch();
   const allDogs = useSelector((state) => state.allDogs);
-  // const [order, setOrder] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [dogsPerPage] = useState(8);
   const indexOfLastDog = currentPage * dogsPerPage;
@@ -39,19 +42,17 @@ export default function Home() {
   const sorting = useSelector((state) => state.sorting);
   const sourceFilter = useSelector((state) => state.sourceFilter);
   const temperamentFilter = useSelector((state) => state.temperamentFilter);
+  const searchText = useSelector((state) => state.searchText);
 
   useEffect(() => {
     dispatch(getTemperaments());
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(getDogs());
   }, [dispatch]);
 
-  function handleClick(e) {
-    e.preventDefault();
-    dispatch(getDogs());
-  }
+  
   function handleTemperamentFilter(e) {
     dispatch(setTemperamentFilter(e.target.value));
   }
@@ -59,79 +60,102 @@ export default function Home() {
     e.preventDefault();
     dispatch(setSorting(e.target.value));
     setCurrentPage(1);
-    // setOrder(`Ordenado ${e.target.value}`);
   }
 
   function handleSourceFilter(e) {
     dispatch(setSourceFilter(e.target.value));
   }
-  const currentDogs = allDogs.filter(
-    (dog) =>
-      (sourceFilter === "All" ||
-        (!!dog.createdInDb === (sourceFilter === "Created"))) &&
-      (temperamentFilter === "All" ||
-        dog.temperaments?.includes(temperamentFilter))
-  ).sort (comparators[sorting]);
+  const currentDogs = allDogs
+    .filter(
+      (dog) =>
+        sourceFilter === "All" ||
+        !!dog.createdInDb === (sourceFilter === "Created")
+    )
+    .filter(
+      (dog) =>
+        temperamentFilter === "All" ||
+        dog.temperaments?.includes(temperamentFilter)
+    )
+    .filter((dog) => dog.name.toLowerCase().includes(searchText.toLowerCase()))
 
-  const dogsRendered = currentDogs.slice(indexOfFirstDog, indexOfLastDog)
+    .sort(comparators[sorting]);
+
+  const dogsRendered = currentDogs.slice(indexOfFirstDog, indexOfLastDog);
 
   return (
-    //   console.log(temps),
     <div>
-      <Link to="/dog">Crear Raza</Link>
-      <h1>YA ESTOY MAMADO DE LOS FUCKING PERROS</h1>
-      {/* <button
-        onClick={(e) => {
-          handleClick(e);
-        }}
-      >
-        Volver a cargar todos los perros
-      </button> */}
-      <div>{/* <SearchBar/> */}</div>
+      <Link className={styles.link} to="/dog">
+        <button className={styles.createBreed}>Create Breed</button>
+      </Link>
+      <Link className={styles.link} to="/home">
+      <img className={styles.gify}
+        src="https://i.pinimg.com/originals/f6/42/ee/f642eea95a8d6676dbfa530fe56b5ade.gif"
+        alt="funny GIF"
+        width="7%"
+      />
+      <div className={styles.title}> 
+      <h1>Doggies Web</h1>
+      </div>
+      </Link>
+      <div>{<SearchBar />}</div>
       <div>
-        <select onChange={(e) => handleSort(e)}>
-          <option value="nameAsc">Ascending by name</option>
-          <option value="nameDesc">Descending by name</option>
-          <option value="weightAsc">Ascending by weight </option>
-          <option value="weightDesc">Descending by weight</option>
+      <div>
+      <h3 className={styles.filterName}>Sort by:</h3>
+        <select className={styles.select} onChange={(e) => handleSort(e)}>
+          <option value="nameAsc">Ascending name</option>
+          <option value="nameDesc">Descending name</option>
+          <option value="weightAsc">Ascending weight </option>
+          <option value="weightDesc">Descending weight</option>
         </select>
-        <select onChange={(e) => handleSourceFilter(e)}>
+        </div>
+        <div> 
+          <h3 className={styles.filterName}>Filter by procedence:</h3>
+        <select className={styles.select} onChange={(e) => handleSourceFilter(e)}>
           <option value="All">All</option>
           <option value="Created">Created</option>
-          <option value="Api">From Api</option>
+          <option value="Api">Existing</option>
         </select>
-        <select onChange={(e) => handleTemperamentFilter(e)}>
+        </div>
+        <div > 
+        <h3 className={styles.filterName}>Filter by temperament:</h3>
+        <select className={styles.select} onChange={(e) => handleTemperamentFilter(e)}>
           {temps.length > 0 ? (
             [
-              <option value="All">All</option>,
+              <option key="All" value="All">All</option>,
               ...temps?.map((el) => {
-                return <option value={el.name}>{el.name}</option>;
+                return <option key={el.name} value={el.name}>{el.name}</option>;
               }),
             ]
           ) : (
             <option> Cargando </option>
           )}
         </select>
+        </div> 
 
+        <div className={styles.cardsContainer}>
+          {dogsRendered?.map((el) => (
+            <div key={el.id}>
+                 <Card
+                  name={el.name}
+                  temperaments={
+                    !el.createdInDb
+                      ? el.temperaments?.join(", ")
+                      : el.temperaments?.map((e) => e.name).join(", ")
+                  }
+                  weight={el.weight}
+                  image={el.image}
+                  id={el.id}
+                  key={el.id}
+                />
+              
+            </div>
+          ))}
+        </div>
         <Paginado
           dogsPerPage={dogsPerPage}
           allDogs={currentDogs.length}
           paginado={paginado}
         />
-        {dogsRendered?.map((el) => (
-          <div key={el.id}>
-            <Link to={"/home/" + el.id}>
-              <Card
-                name={el.name}
-                temperaments={el.temperaments + ", "}
-                weight={el.weight}
-                image={el.image}
-                id={el.id}
-                key={el.id}
-              />
-            </Link>
-          </div>
-        ))}
       </div>
     </div>
   );

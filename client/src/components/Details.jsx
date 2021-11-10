@@ -1,38 +1,51 @@
-import React from "react";
-import {Link} from 'react-router-dom';
-import { useDispatch, useSelector } from "react-redux";
-// import { getDetail } from "../actions";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { getDogs } from "../actions";
+import styles from "./Details.module.css";
 
-export default function Details(props){
-console.log(props)
-    const dispatch = useDispatch()
+export default function Details(props) {
+  const dispatch = useDispatch();
+  const allDogs = useSelector((state) => state.allDogs);
+  // eslint-disable-next-line eqeqeq
+  const myDog = allDogs.find((dog) => dog.id == props.match.params.id);
 
-    useEffect(() => {
-        // dispatch(getDetail(props.match.params.id))
-    },[dispatch])
+  useEffect(() => {
+    if (allDogs.length === 0) dispatch(getDogs());
+  }, [dispatch, allDogs.length]);
 
-    const myDog = useSelector ((state)=> state.detail)
-
-    return(
-        <div>
-            {
-               myDog.length>0 ?
-               <div> 
-                   <h1>Name:{myDog[0].name}</h1>
-                   <img src ={myDog[0].image} alt="" width="500px" height="700px"/>
-                   <h3>Temperaments:
-                       {!myDog[0].createdInDb ? 
-                       myDog[0].temperaments + ' ' 
-                       : myDog[0].temperaments.map(el=> el.name + (' '))}</h3>
-                   <h3>Weight:{myDog[0].weight}</h3>
-                   <h3>Height:{myDog[0].height}</h3>
-
-               </div> : <p>Loading...</p>
-            }
-            <Link to = '/home'>
-                <button>Home</button>
-            </Link>
+  return (
+    <div>
+      <Link className={styles.link} to="/home">
+        <img
+          className={styles.gify}
+          src="https://i.pinimg.com/originals/f6/42/ee/f642eea95a8d6676dbfa530fe56b5ade.gif"
+          alt="funny GIF"
+          width="7%"
+        />
+        <div className={styles.title1}>
+          <h1>Doggies Web</h1>
         </div>
-    )
+        <button className={styles.homeBtn}>Home</button>
+      </Link>
+      {myDog ? (
+        <div className={styles.container}>
+          <h1 className={styles.name}>{myDog.name}</h1>
+          <img className={styles.img} src={myDog.image} alt="" />
+          <div className={styles.description}>
+            <h3>
+              Temperaments:{" "}
+              {!myDog.createdInDb
+                ? myDog.temperaments?.join(", ")
+                : myDog.temperaments?.map((e) => e.name).join(", ")}
+            </h3>
+            <h3>Weight: {myDog.weight}</h3>
+            <h3>Height: {myDog.height}</h3>
+          </div>
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
+  );
 }

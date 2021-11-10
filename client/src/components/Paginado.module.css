@@ -1,0 +1,19 @@
+
+.navstyle{ 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-left: 20rem;
+  margin-right: 10rem;
+  bottom: 1vh;
+}
+
+.styledli{ 
+  text-decoration: none;
+  list-style: none;
+  display: inline-flex;
+  padding: 0;
+  margin: 10px;
+  flex-direction: row;
+  margin-bottom: 0;
+}
