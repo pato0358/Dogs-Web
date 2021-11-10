@@ -63,6 +63,7 @@ router.get("/temperaments", async (req, res) => {
   const apiDogs = await getApiDogs();
 
   const dogTemperaments = apiDogs.map((el) => el.temperaments);
+  
 
   const uniques = {};
   dogTemperaments.forEach((list) => {
