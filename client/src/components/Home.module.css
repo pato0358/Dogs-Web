@@ -75,3 +75,25 @@
 .link{
   text-decoration: none;
 }
+
+
+.reset {
+  -webkit-border-radius: 60;
+  -moz-border-radius: 60;
+  border-radius: 60px;
+  font-family: Georgia;
+  color: #ffffff;
+  font-size: 15px;
+  background: rgb(66, 73, 150);
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  margin-left: 1.5vw;
+  margin-top: 1vh;
+  display: flex;
+  text-decoration: none;
+}
+
+.reset:hover {
+  background: #807dc4;
+  text-decoration: none;
+}

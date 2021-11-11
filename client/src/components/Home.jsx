@@ -19,7 +19,7 @@ const comparators = {
   nameDesc: (a, b) => b.name.localeCompare(a.name),
   weightAsc: (a, b) => getWeight(a) - getWeight(b),
   weightDesc: (a, b) => getWeight(b) - getWeight(a),
-};
+  };
 
 function getWeight(dog) {
   const w = dog.weight.split(" - ")[0];
@@ -65,6 +65,14 @@ export default function Home() {
   function handleSourceFilter(e) {
     dispatch(setSourceFilter(e.target.value));
   }
+
+  function resetFilters() {
+    dispatch(setSourceFilter("All"))
+    dispatch(setSorting("nameAsc"))
+    dispatch(setTemperamentFilter("All"))
+      }
+
+
   const currentDogs = allDogs
     .filter(
       (dog) =>
@@ -101,7 +109,7 @@ export default function Home() {
       <div>
       <div>
       <h3 className={styles.filterName}>Sort by:</h3>
-        <select className={styles.select} onChange={(e) => handleSort(e)}>
+        <select value={sorting} className={styles.select} onChange={(e) => handleSort(e)}>
           <option value="nameAsc">Ascending name</option>
           <option value="nameDesc">Descending name</option>
           <option value="weightAsc">Ascending weight </option>
@@ -110,7 +118,7 @@ export default function Home() {
         </div>
         <div> 
           <h3 className={styles.filterName}>Filter by procedence:</h3>
-        <select className={styles.select} onChange={(e) => handleSourceFilter(e)}>
+        <select value={sourceFilter} className={styles.select} onChange={(e) => handleSourceFilter(e)}>
           <option value="All">All</option>
           <option value="Created">Created</option>
           <option value="Api">Existing</option>
@@ -118,7 +126,7 @@ export default function Home() {
         </div>
         <div > 
         <h3 className={styles.filterName}>Filter by temperament:</h3>
-        <select className={styles.select} onChange={(e) => handleTemperamentFilter(e)}>
+        <select value={temperamentFilter} className={styles.select} onChange={(e) => handleTemperamentFilter(e)}>
           {temps.length > 0 ? (
             [
               <option key="All" value="All">All</option>,
@@ -130,6 +138,9 @@ export default function Home() {
             <option> Cargando </option>
           )}
         </select>
+        <div>
+          <button className={styles.reset} onClick={() => resetFilters()}>Reset filters and sorting</button>
+        </div>
         </div> 
 
         <div className={styles.cardsContainer}>
